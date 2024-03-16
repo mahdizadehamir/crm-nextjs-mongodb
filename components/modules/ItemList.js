@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import FormInput from './FormInput';
 
 function ItemList({ form, setForm }) {
@@ -9,15 +10,25 @@ function ItemList({ form, setForm }) {
         ...products,
         {
           name: '',
-          price: '',
+          Price: '',
           qty: '',
         },
       ],
     });
-    console.log(products);
   };
-  const removeHandler = () => {};
-  const changeHandler = () => {};
+  const removeHandler = (index) => {
+    const newProducts = [...products];
+    newProducts.splice(index, 1);
+    setForm({ ...form, products: newProducts });
+  };
+  const changeHandler = (e, index) => {
+    const newProducts = [...products];
+    newProducts[index][e.target.name] = e.target.value;
+    setForm({
+      ...form,
+      products: newProducts,
+    });
+  };
   return (
     <div className="item-list">
       <p>Purchased Products</p>
@@ -28,7 +39,7 @@ function ItemList({ form, setForm }) {
             value={product.name}
             type="text"
             label="Product Name"
-            onChange={changeHandler}
+            onChange={(e) => changeHandler(e, index)}
           />
           <div>
             <FormInput
@@ -36,17 +47,17 @@ function ItemList({ form, setForm }) {
               value={product.price}
               type="text"
               label="Price"
-              onChange={changeHandler}
+              onChange={(e) => changeHandler(e, index)}
             />
             <FormInput
               name="qty"
               value={product.qty}
               type="number"
               label="qty"
-              onChange={changeHandler}
+              onChange={(e) => changeHandler(e, index)}
             />
           </div>
-          <button onClick={removeHandler}>Remove</button>
+          <button onClick={() => removeHandler(index)}>Remove</button>
         </div>
       ))}
       <button onClick={addHandler}>Add Item</button>
