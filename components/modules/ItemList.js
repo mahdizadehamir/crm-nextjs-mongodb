@@ -28,37 +28,18 @@ function ItemList({ form, setForm }) {
       ...form,
       products: newProducts,
     });
+    console.log(products);
   };
   return (
     <div className="item-list">
       <p>Purchased Products</p>
       {products.map((product, index) => (
-        <div key={index} className="form-input__list">
-          <FormInput
-            name="name"
-            value={product.name}
-            type="text"
-            label="Product Name"
-            onChange={(e) => changeHandler(e, index)}
-          />
-          <div>
-            <FormInput
-              name="Price"
-              value={product.price}
-              type="text"
-              label="Price"
-              onChange={(e) => changeHandler(e, index)}
-            />
-            <FormInput
-              name="qty"
-              value={product.qty}
-              type="number"
-              label="qty"
-              onChange={(e) => changeHandler(e, index)}
-            />
-          </div>
-          <button onClick={() => removeHandler(index)}>Remove</button>
-        </div>
+        <ProductItem
+          product={product}
+          key={index}
+          changeHandler={(e) => changeHandler(e, index)}
+          removeHandler={() => removeHandler(index)}
+        />
       ))}
       <button onClick={addHandler}>Add Item</button>
     </div>
@@ -66,3 +47,34 @@ function ItemList({ form, setForm }) {
 }
 
 export default ItemList;
+
+function ProductItem({ product, removeHandler, changeHandler }) {
+  return (
+    <div className="form-input__list">
+      <FormInput
+        name="name"
+        value={product.name}
+        type="text"
+        label="Product Name"
+        onChange={changeHandler}
+      />
+      <div>
+        <FormInput
+          name="Price"
+          value={product.price}
+          type="text"
+          label="Price"
+          onChange={changeHandler}
+        />
+        <FormInput
+          name="qty"
+          value={product.qty}
+          type="number"
+          label="qty"
+          onChange={changeHandler}
+        />
+      </div>
+      <button onClick={removeHandler}>Remove</button>
+    </div>
+  );
+}
