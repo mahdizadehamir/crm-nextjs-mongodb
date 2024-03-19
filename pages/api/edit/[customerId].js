@@ -1,5 +1,4 @@
 import Customer from '@/models/Customer';
-import connectDB from '@/utils/connectDB';
 
 export default async function handler(req, res) {
   try {
@@ -9,10 +8,20 @@ export default async function handler(req, res) {
     res.status(500), json({ status: 'failed', message: 'error in connecting to db' });
   }
   const id = req.query.customerId;
-  if (req.method === 'DELETE') {
+  const data = req.body.data;
+
+  if (req.method === 'PATCH') {
     try {
-      await Customer.deleteOne({ _id: id });
-      res.status(200).json({ status: 'success', message: 'data deleted' });
+      const customer = await Customer.findOne({ _id: id });
+      customer.name = data.name;
+      customer.lastName = data.lastName;
+      customer.email = data.email;
+      customer.address = data.address;
+      customer.phone = data.phone;
+      customer.date = data.date;
+      customer.products = data.products;
+      customer.updateAt = Date.now();
+      customer.save();
     } catch (err) {
       res
         .status(500)
