@@ -37,7 +37,7 @@ function ItemList({ form, setForm }) {
         <ProductItem
           product={product}
           key={index}
-          changeHandler={(e) => changeHandler(e, index)}
+          changeHandler={(e) => changeHandler(e,index)}
           removeHandler={() => removeHandler(index)}
         />
       ))}
@@ -60,7 +60,7 @@ function ProductItem({ product, removeHandler, changeHandler }) {
       />
       <div>
         <FormInput
-          name="Price"
+          name="price"
           value={product.price}
           type="text"
           label="Price"
