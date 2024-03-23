@@ -8,8 +8,7 @@ function Card({ customer }) {
       method: 'DELETE',
     });
     const data = await res.json();
-    router.reload();
-    console.log(data);
+    if (data) router.reload();
   };
   return (
     <div className="card">

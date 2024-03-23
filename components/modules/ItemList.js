@@ -28,7 +28,6 @@ function ItemList({ form, setForm }) {
       ...form,
       products: newProducts,
     });
-    console.log(products);
   };
   return (
     <div className="item-list">
