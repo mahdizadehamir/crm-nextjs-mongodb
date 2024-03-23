@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Form from '../modules/Form';
 import { useRouter } from 'next/router';
+import moment from 'moment';
 
 function CustomerEditPage({ data, id }) {
   const router = useRouter();
@@ -14,8 +15,9 @@ function CustomerEditPage({ data, id }) {
       headers: { 'Content-Type': 'application/json' },
     });
     const data = await res.json();
-    console.log(data);
+  if(data.status === 'success') router.push('/')    
   };
+  const date = data.date ? moment(data.date).utc().format('YYYY-MM-DD') : '';
   const [form, setForm] = useState({
     name: data.name,
     lastName: data.lastName,
@@ -23,7 +25,7 @@ function CustomerEditPage({ data, id }) {
     phone: data.phone || '',
     postalCode: data.postalCode || '',
     address: data.address || '',
-    date: data.date || '',
+    date: date || '',
     products: data.products || [],
   });
   return (
